@@ -1,7 +1,7 @@
 package com.whddbs.sm.domain;
 
 public class Board {
-  private static int no;
+  private int no;
   private String registeredDay;
   private String title;
   private String contents;

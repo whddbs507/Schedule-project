@@ -1,4 +1,4 @@
-/* 15번 게터세터 수정*/
+/* 19-1부터 */
 package com.whddbs.sm;
 
 import java.util.Scanner;
@@ -10,12 +10,12 @@ public class App {
   public static void main(String[] args) {
     Scanner keyboard = new Scanner(System.in);
     
-    MemberHandler memberHandler = new MemberHandler();
-    BoardHandler boardHandler = new BoardHandler(keyboard);
+    MemberHandler memberHandler = new MemberHandler(keyboard);
+    BoardHandler boardHandler = new BoardHandler(keyboard, 100);
     BoardHandler boardHandler2 = new BoardHandler(keyboard, 10);
     BoardHandler boardHandler3 = new BoardHandler(keyboard, 500);
     BoardHandler boardHandler4 = new BoardHandler(keyboard);
-    ScheduleHandler scheduleHandler = new ScheduleHandler();
+    ScheduleHandler scheduleHandler = new ScheduleHandler(keyboard);
     
     while (true) {
       System.out.print("명령어 > ");

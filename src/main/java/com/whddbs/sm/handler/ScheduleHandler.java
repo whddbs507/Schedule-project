@@ -5,40 +5,56 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Scanner;
 import com.whddbs.sm.domain.Schedule;
+import com.whddbs.sm.util.ArrayList;
 
 public class ScheduleHandler {
   static Scanner keyboard = new Scanner(System.in);
-  static Schedule[] schedules = new Schedule[100]; 
+  ArrayList<Schedule> scheduleList;
   
-  public static void addSchedule() {
+  Scanner scanner;
+  static int scheduleCount = 0;
+  
+  public ScheduleHandler(Scanner scanner) {
+    this.scanner = scanner;
+    this.scheduleList = new ArrayList<>();
+  }
+
+  public ScheduleHandler(Scanner scanner, int capacity) {
+    this.scanner = scanner;
+    this.scheduleList = new ArrayList<>(capacity);
+  }
+  
+  public void addSchedule() {
     Schedule schedule = new Schedule();
-    ++schedule.no;
+    schedule.setNo(++scheduleCount);
     
-    System.out.printf("번호 : %d\n", schedule.no);
+    System.out.printf("번호 : %d\n", schedule.getNo());
     
     Calendar calendar = new GregorianCalendar(Locale.KOREA);
     int nYear = calendar.get(Calendar.YEAR);
     int nMonth = calendar.get(Calendar.MONTH) + 1;
     int nDay = calendar.get(Calendar.DAY_OF_MONTH);
-    schedule.selectDay = nYear + "-" + nMonth + "-" + nDay;
-    System.out.println(schedule.selectDay);
+    schedule.setSelectDay(nYear + "-" + nMonth + "-" + nDay); 
+    System.out.println(schedule.getSelectDay());
     System.out.print("제목 : ");
-    schedule.title = keyboard.nextLine();
+    schedule.setTitle(keyboard.nextLine());
     
     System.out.print("내용 : ");
-    schedule.contents = keyboard.nextLine();
+    schedule.setContents(keyboard.nextLine());
     
-    schedules[schedule.no - 1] = schedule;
+    this.scheduleList.add(schedule);
   }
 
-  public static void listSchedule() {
+  public void listSchedule() {
     System.out.print("확인할 번호 : ");
     int listNo = keyboard.nextInt();
     keyboard.nextLine();
-    Schedule schedule = schedules[listNo - 1];
+    
+    Schedule schedule = this.scheduleList.get(listNo);
+    
     System.out.printf("번호 : %d\n", listNo);
-    System.out.printf("제목 : %s\n", schedule.title);
-    System.out.printf("내용 : %s\n", schedule.contents);
-    System.out.printf("등록일 : %s\n", schedule.selectDay);
+    System.out.printf("제목 : %s\n", schedule.getTitle());
+    System.out.printf("내용 : %s\n", schedule.getContents());
+    System.out.printf("등록일 : %s\n", schedule.getSelectDay());
   }
 }

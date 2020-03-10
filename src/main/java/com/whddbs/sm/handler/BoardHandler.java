@@ -5,28 +5,31 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Scanner;
 import com.whddbs.sm.domain.Board;
+import com.whddbs.sm.util.ArrayList;
 
 public class BoardHandler {
-  final static int SIZE = 100;
   static Scanner keyboard = new Scanner(System.in);
   static Board[] boards; 
+  static int boardCount = 0;
+  ArrayList<Board> boardList;
   Scanner input;
   
   public BoardHandler(Scanner input) {
     this.input = input;
-    boards = new Board[SIZE];
+    this.boardList = new ArrayList<>();
   }
   
   public BoardHandler(Scanner input, int capacity) {
     this.input = input;
-    boards = new Board[capacity];
+    this.boardList = new ArrayList<>(capacity);
   }
   
-  public static void addBoard() {
+  public void addBoard() {
     Board board = new Board();
-    ++board.no;
+    board.setNo(++boardCount);
+    System.out.println(boardCount);
     
-    System.out.printf("번호 : %d\n", board.no);
+    System.out.printf("번호 : %d\n", board.getNo());
     
     Calendar calendar = new GregorianCalendar(Locale.KOREA);
     int nYear = calendar.get(Calendar.YEAR);
@@ -35,23 +38,30 @@ public class BoardHandler {
     
     board.setRegisterDay(nYear + "-" + nMonth + "-" + nDay);
     System.out.println(board.getRegisteredDay());
+    
     System.out.print("제목 : ");
     board.setTitle(keyboard.nextLine());
     
     System.out.print("내용 : ");
     board.setContents(keyboard.nextLine());
-    
-    boards[board.no - 1] = board;
+
+    this.boardList.add(board);
   }
 
-  public static void listBoard() {
+  public void listBoard() {
     System.out.print("확인할 번호 : ");
     int listNo = keyboard.nextInt();
     keyboard.nextLine();
-    Board board = boards[listNo - 1];
+
+    Board board = (Board)this.boardList.get(listNo);
+    
+    if (board == null) {
+      System.out.println("게시물 번호가 유효하지 않습니다.");
+    }
+    
     System.out.printf("번호 : %d\n", listNo);
-    System.out.printf("제목 : %s\n", board.title);
-    System.out.printf("내용 : %s\n", board.contents);
-    System.out.printf("등록일 : %s\n", board.registeredDay);
+    System.out.printf("제목 : %s\n", board.getTitle());
+    System.out.printf("내용 : %s\n", board.getContents());
+    System.out.printf("등록일 : %s\n", board.getRegisteredDay());
   }
 }
