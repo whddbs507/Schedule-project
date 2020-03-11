@@ -1,32 +1,47 @@
 package com.whddbs.sm.util;
 
+import java.util.Arrays;
 import com.whddbs.sm.domain.Board;
 
 public class ArrayList<E> {
   
   final static int DEFAULT_CAPACITY = 10;
   
-  Object[] list;
+  Object[] elementData;
   int size = 0;
   
   public ArrayList() {
-    list = new Object[DEFAULT_CAPACITY];
+    elementData = new Object[DEFAULT_CAPACITY];
   }
   
   public ArrayList(int capacity) {
-    list = new Object[capacity];
+    elementData = new Object[capacity];
   }
   
   public void add(E object) {
-    list[size++] = object;
+    elementData[size++] = object;
   }
   
-  @SuppressWarnings("unchecked")
-  public E get(int listNo) {
-    if (listNo > 0 || listNo <= list.length) {
-      return (E)list[listNo - 1];
+  public E get(int detailNum) {
+      return (E) elementData[detailNum - 1];
+  }
+  
+  public E set(int updateNum) {
+    return (E) elementData[updateNum - 1];
+  }
+  
+  public void remove(int deleteNum) {
+    for (int i = deleteNum - 1; i < size - 1; i++) {
+      elementData[i] = elementData[i + 1];
     }
-    return null;
+    elementData[size--] = null;
   }
   
+  public E[] list(E[] e) {
+    return (E[]) Arrays.copyOf(elementData, size, e.getClass());
+  }
+  
+  public int size() {
+    return this.size;
+  }
 }

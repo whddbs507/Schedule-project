@@ -28,11 +28,29 @@ public class App {
         case "/member/list":
           memberHandler.listMember();
           break;
+        case "/member/detail":
+          memberHandler.detailMember();
+          break;
+        case "/member/update":
+          memberHandler.updateMember();
+          break;
+        case "/member/delete":
+          memberHandler.deleteMember();
+          break;
         case "/board/add":
           boardHandler.addBoard();
           break;
         case "/board/list":
           boardHandler.listBoard();
+          break;
+        case "/board/detail":
+          boardHandler.detailBoard();
+          break;
+        case "/board/update":
+          boardHandler.updateBoard();
+          break;
+        case "/board/delete":
+          boardHandler.deleteBoard();
           break;
         case "/board2/add":
           boardHandler2.addBoard();
@@ -40,11 +58,29 @@ public class App {
         case "/board2/list":
           boardHandler2.listBoard();
           break;
+        case "/board2/detail":
+          boardHandler.detailBoard();
+          break;
+        case "/board2/update":
+          boardHandler.updateBoard();
+          break;
+        case "/board2/delete":
+          boardHandler.deleteBoard();
+          break;
         case "/board3/add":
           boardHandler3.addBoard();
           break;
         case "/board3/list":
           boardHandler3.listBoard();
+          break;
+        case "/board3/detail":
+          boardHandler.detailBoard();
+          break;
+        case "/board3/update":
+          boardHandler.updateBoard();
+          break;
+        case "/board3/delete":
+          boardHandler.deleteBoard();
           break;
         case "/board4/add":
           boardHandler4.addBoard();
@@ -52,11 +88,29 @@ public class App {
         case "/board4/list":
           boardHandler4.listBoard();
           break;
+        case "/board4/detail":
+          boardHandler.detailBoard();
+          break;
+        case "/board4/update":
+          boardHandler.updateBoard();
+          break;
+        case "/board4/delete":
+          boardHandler.deleteBoard();
+          break;
         case "/schedule/add":
           scheduleHandler.addSchedule();
           break;
         case "/schedule/list":
           scheduleHandler.listSchedule();
+          break;
+        case "/schedule/detail":
+          scheduleHandler.detailSchedule();
+          break;
+        case "/schedule/update":
+          scheduleHandler.updateSchedule();
+          break;
+        case "/schedule/delete":
+          scheduleHandler.deleteSchedule();
           break;
       }
       

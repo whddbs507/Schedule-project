@@ -19,7 +19,7 @@ public class Board {
   }
   
   public String getRegisteredDay() {
-    return this.registeredDay;
+    return registeredDay;
   }
   
   public void setTitle(String title) {
@@ -27,7 +27,7 @@ public class Board {
   }
   
   public String getTitle() {
-    return this.title;
+    return title;
   }
   
   public void setContents(String contents) {
@@ -35,6 +35,6 @@ public class Board {
   }
   
   public String getContents() {
-    return this.contents;
+    return contents;
   }
 }
