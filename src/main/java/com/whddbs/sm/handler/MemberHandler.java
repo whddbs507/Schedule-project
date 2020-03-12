@@ -1,12 +1,9 @@
 package com.whddbs.sm.handler;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.Scanner;
-import com.whddbs.sm.domain.Board;
 import com.whddbs.sm.domain.Member;
 import com.whddbs.sm.util.ArrayList;
+import com.whddbs.sm.util.LinkedList;
 
 public class MemberHandler {
   static Scanner keyboard = new Scanner(System.in);
@@ -16,12 +13,12 @@ public class MemberHandler {
 
   public MemberHandler(Scanner scanner) {
     this.scanner = scanner;
-    this.memberList = new ArrayList<>();
+    this.memberList = new LinkedList<>();
   }
 
   public MemberHandler(Scanner scanner, int capacity) {
     this.scanner = scanner;
-    this.memberList = new ArrayList<>(capacity);
+    this.memberList = new LinkedList<>();
   }
 
   public void addMember() {
@@ -48,7 +45,7 @@ public class MemberHandler {
   public void listMember() {
     Member[] members = new Member[this.memberList.size()];
 
-    members = this.memberList.list(members);
+    members = this.memberList.toArray(members);
 
     for (Member m : members) {
       System.out.printf("%d %s %s %s\n", m.getNo(),

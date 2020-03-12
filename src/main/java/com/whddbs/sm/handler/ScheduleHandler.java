@@ -17,12 +17,12 @@ public class ScheduleHandler {
 
   public ScheduleHandler(Scanner scanner) {
     this.scanner = scanner;
-    this.scheduleList = new ArrayList<>();
+    this.scheduleList = new LinkedList<>();
   }
 
   public ScheduleHandler(Scanner scanner, int capacity) {
     this.scanner = scanner;
-    this.scheduleList = new ArrayList<>(capacity);
+    this.scheduleList = new LinkedList<>();
   }
 
   public void addSchedule() {
@@ -49,7 +49,7 @@ public class ScheduleHandler {
   public void listSchedule() {
     Schedule[] schedules = new Schedule[this.scheduleList.size()];
 
-    schedules = this.scheduleList.list(schedules);
+    schedules = this.scheduleList.toArray(schedules);
 
     for (Schedule s : schedules) {
       System.out.printf("%d %s %s %s\n", s.getNo(),

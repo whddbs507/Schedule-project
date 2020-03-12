@@ -17,12 +17,12 @@ public class BoardHandler {
 
   public BoardHandler(Scanner input) {
     this.input = input;
-    this.boardList = new ArrayList<>();
+    this.boardList = new LinkedList<>();
   }
 
   public BoardHandler(Scanner input, int capacity) {
     this.input = input;
-    this.boardList = new ArrayList<>(capacity);
+    this.boardList = new LinkedList<>();
   }
 
   public void addBoard() {
@@ -53,7 +53,7 @@ public class BoardHandler {
   public void listBoard() {
     Board[] boards = new Board[this.boardList.size()];
     
-    boards = this.boardList.list(boards);
+    boards = this.boardList.toArray(boards);
     
     for (Board b : boards) {
       System.out.printf("%d %s %s %s\n", b.getNo(),
