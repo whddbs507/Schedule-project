@@ -91,6 +91,21 @@ public class MemberHandler {
     int deleteNum = keyboard.nextInt();
     keyboard.nextLine();
 
-    this.memberList.remove(deleteNum);
+    int index = indexOfMember(deleteNum);
+    
+    if (index == -1) {
+      System.out.println("존재하지 않는 넘버입니다.");
+    }
+    
+    this.memberList.remove(index);
+  }
+  
+  private int indexOfMember(int no) {
+    for (int i = 0; i <= this.memberList.size(); i++) {
+      if (this.memberList.get(i).getNo() == no) {
+        return i;
+      }
+    }
+    return -1;
   }
 }

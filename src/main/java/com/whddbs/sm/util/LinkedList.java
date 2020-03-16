@@ -3,92 +3,54 @@ package com.whddbs.sm.util;
 import java.util.Arrays;
 
 public class LinkedList<E> {
-
-  Node first;
-  Node last;
-
+  Node<E> first;
+  Node<E> last;
+  
   int size;
-
-  static class Node {
-    Object value;
+  
+  LinkedList() {
+  }
+  
+  public class Node<E> {
+    E value;
     Node next;
   }
-
-  public void add(E value) {
-    Node node = new Node();
-    node.value = value;
-
-    if(first == null) {
-      first = last = node;
+  
+  public void add(E e) {
+    Node newNode = new Node();
+    
+    if (first == null) {
+      first = newNode;
+      last = newNode;
     } else {
-      last.next = node;
-      last = node;
+      last.next = newNode;
+      last = last.next;
     }
-
-    size++;
+    last.value = e;
   }
-
-  public E get(int index) {
+  
+  public E[] toArray(E[] arr) {
     Node cursor = first;
-
-    for (int i = 0; i < index - 1; i++) {
-      cursor = cursor.next;
-    }
-
-    return (E) cursor.value;
-  }
-
-  /*remove수정*/
-  public void remove(int index) {
-    Node cursor = first;
-
-    if (index == 1) {
-      first = first.next;
-    } else {
-      for (int i = 0; i < index - 2; i++) {
-        cursor = cursor.next;
-      }
-      Node deleteNode = cursor.next;
-      cursor.next = deleteNode.next;
-    }
-    size--;
-  }
-
-  public E set(int index) {
-    Node cursor = new Node();
-    cursor = first;
-
-    for (int i = 0; i < index - 1; i++) {
-      cursor = cursor.next;
-    }
-    return (E) cursor.value;
-  }
-
-  @SuppressWarnings("unchecked")
-  public E[] toArray(E[] e) {
-    Object[] arr = new Object[size];
-
-    Node cursor = new Node();
-    cursor = first;
-
     for (int i = 0; i < size; i++) {
       arr[i] = cursor.value;
       cursor = cursor.next;
     }
-
-    return (E[]) Arrays.copyOf(arr, size, e.getClass());
+    return arr;
   }
-
+  
+  public E get(int num) {
+    
+  }
+  
+  public E set(int num) {
+    
+  }
+  
+  public void remove(int index) {
+    
+  }
+  
   public int size() {
     return this.size;
   }
-  /*
-   add(value)
-   get(index)
-   add(index, value)
-   remove(index)
-   set(index, value)
-   toArray()
-   size() 
-   */
 }

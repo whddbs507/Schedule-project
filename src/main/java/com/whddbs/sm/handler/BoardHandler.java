@@ -47,26 +47,26 @@ public class BoardHandler {
     board.setContents(keyboard.nextLine());
 
     this.boardList.add(board);
-    
+
   }
 
   public void listBoard() {
     Board[] boards = new Board[this.boardList.size()];
-    
+
     boards = this.boardList.toArray(boards);
-    
+
     for (Board b : boards) {
       System.out.printf("%d %s %s %s\n", b.getNo(),
-       b.getTitle(), b.getContents(), b.getRegisteredDay());
+          b.getTitle(), b.getContents(), b.getRegisteredDay());
     }
   }
 
   public void detailBoard() {
     int detailNum = keyboard.nextInt();
     keyboard.nextLine();
-    
+
     Board board = this.boardList.get(detailNum);
-    
+
     System.out.printf("번호 : %d\n", board.getNo());
     System.out.printf("제목 : %s\n", board.getTitle());
     System.out.printf("내용 : %s\n", board.getContents());
@@ -77,9 +77,9 @@ public class BoardHandler {
     System.out.print("변경할 번호 선택 : ");
     int updateNum = keyboard.nextInt();
     keyboard.nextLine();
-    
+
     Board board = this.boardList.set(updateNum);
-    
+
     Calendar calendar = new GregorianCalendar(Locale.KOREA);
     int nYear = calendar.get(Calendar.YEAR);
     int nMonth = calendar.get(Calendar.MONTH) + 1;
@@ -99,7 +99,22 @@ public class BoardHandler {
     System.out.print("삭제할 번호 선택 : ");
     int deleteNum = keyboard.nextInt();
     keyboard.nextLine();
+
+    int index = indexOfBoard(deleteNum);
     
-    this.boardList.remove(deleteNum);
+    if (index == -1) {
+      System.out.println("존재하지 않는 넘버입니다.");
+    }
+    
+    this.boardList.remove(index);
+  }
+
+  private int indexOfBoard(int no) {
+    for (int i = 0; i <= this.boardList.size(); i++) {
+      if (this.boardList.get(i).getNo() == no) {
+        return i;
+      }
+    }
+    return -1;
   }
 }

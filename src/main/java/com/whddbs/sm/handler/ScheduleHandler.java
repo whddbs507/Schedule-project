@@ -96,6 +96,21 @@ public class ScheduleHandler {
     int deleteNum = keyboard.nextInt();
     keyboard.nextLine();
 
-    this.scheduleList.remove(deleteNum);
+    int index = indexOfSchedule(deleteNum);
+    
+    if (index == -1) {
+      System.out.println("존재하지 않는 넘버입니다.");
+    }
+    
+    this.scheduleList.remove(index);
+  }
+
+  private int indexOfSchedule(int no) {
+    for (int i = 0; i <= this.scheduleList.size(); i++) {
+      if (this.scheduleList.get(i).getNo() == no) {
+        return i;
+      }
+    }
+    return -1;
   }
 }

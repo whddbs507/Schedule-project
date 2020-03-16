@@ -7,9 +7,9 @@ import com.whddbs.sm.handler.MemberHandler;
 import com.whddbs.sm.handler.ScheduleHandler;
 
 public class App {
+  static Scanner keyboard = new Scanner(System.in);
   public static void main(String[] args) {
-    Scanner keyboard = new Scanner(System.in);
-    
+
     MemberHandler memberHandler = new MemberHandler(keyboard);
     BoardHandler boardHandler = new BoardHandler(keyboard, 100);
     BoardHandler boardHandler2 = new BoardHandler(keyboard, 10);
@@ -20,7 +20,8 @@ public class App {
     while (true) {
       System.out.print("명령어 > ");
       String command = keyboard.nextLine();
-      
+
+
       switch(command) {
         case "/member/add":
           memberHandler.addMember();
@@ -113,11 +114,11 @@ public class App {
           scheduleHandler.deleteSchedule();
           break;
       }
-      
+
       if (command.equalsIgnoreCase("quit")) {
         break;
       }
     }
-    
+
   }
 }
