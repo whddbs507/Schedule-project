@@ -110,7 +110,7 @@ public class BoardHandler {
   }
 
   private int indexOfBoard(int no) {
-    for (int i = 0; i <= this.boardList.size(); i++) {
+    for (int i = 0; i < this.boardList.size(); i++) {
       if (this.boardList.get(i).getNo() == no) {
         return i;
       }

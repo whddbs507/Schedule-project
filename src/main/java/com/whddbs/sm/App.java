@@ -5,6 +5,7 @@ import java.util.Scanner;
 import com.whddbs.sm.handler.BoardHandler;
 import com.whddbs.sm.handler.MemberHandler;
 import com.whddbs.sm.handler.ScheduleHandler;
+import com.whddbs.sm.util.Stack;
 
 public class App {
   static Scanner keyboard = new Scanner(System.in);
@@ -16,6 +17,7 @@ public class App {
     BoardHandler boardHandler3 = new BoardHandler(keyboard, 500);
     BoardHandler boardHandler4 = new BoardHandler(keyboard);
     ScheduleHandler scheduleHandler = new ScheduleHandler(keyboard);
+    Stack stack = new Stack();
     
     while (true) {
       System.out.print("명령어 > ");
@@ -113,6 +115,9 @@ public class App {
         case "/schedule/delete":
           scheduleHandler.deleteSchedule();
           break;
+        case "history":
+          printCommandHistory();
+          break;
       }
 
       if (command.equalsIgnoreCase("quit")) {
@@ -120,5 +125,9 @@ public class App {
       }
     }
 
+  }
+  
+  public static void printCommandHistory() {
+    
   }
 }
