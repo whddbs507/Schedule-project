@@ -8,9 +8,6 @@ public class LinkedList<E> {
 
   int size;
 
-  public LinkedList() {
-  }
-
   public class Node<E> {
     E value;
     Node next;
@@ -64,6 +61,7 @@ public class LinkedList<E> {
 
   public E remove(int index) {
     Node cursor = first;
+    Node deleteNode;
     
     if (index < 0 || index > size) {
       return null;
@@ -71,8 +69,10 @@ public class LinkedList<E> {
     
     
     if (index == 0) {
-      first = first.next;
-      return first.value;
+      deleteNode = first;
+      first = deleteNode.next;
+      size--;
+      return (E) deleteNode.value;
     } else {
       if(index == size - 1) {
         last = first;
@@ -85,7 +85,7 @@ public class LinkedList<E> {
         cursor = cursor.next;
       }
       
-      Node deleteNode = cursor.next;
+      deleteNode = cursor.next;
       cursor.next = deleteNode.next;
       
       --size;

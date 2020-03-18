@@ -1,29 +1,30 @@
-/* 19-1부터 */
 package com.whddbs.sm;
 
 import java.util.Scanner;
 import com.whddbs.sm.handler.BoardHandler;
 import com.whddbs.sm.handler.MemberHandler;
 import com.whddbs.sm.handler.ScheduleHandler;
+import com.whddbs.sm.util.Queue;
 import com.whddbs.sm.util.Stack;
 
 public class App {
   static Scanner keyboard = new Scanner(System.in);
+  static Stack<String> stack = new Stack();
+  static Queue<String> queue = new Queue();
+  
   public static void main(String[] args) {
 
     MemberHandler memberHandler = new MemberHandler(keyboard);
     BoardHandler boardHandler = new BoardHandler(keyboard, 100);
-    BoardHandler boardHandler2 = new BoardHandler(keyboard, 10);
-    BoardHandler boardHandler3 = new BoardHandler(keyboard, 500);
-    BoardHandler boardHandler4 = new BoardHandler(keyboard);
     ScheduleHandler scheduleHandler = new ScheduleHandler(keyboard);
-    Stack stack = new Stack();
     
     while (true) {
       System.out.print("명령어 > ");
       String command = keyboard.nextLine();
 
-
+      stack.push(command);
+      queue.offer(command);
+      
       switch(command) {
         case "/member/add":
           memberHandler.addMember();
@@ -55,51 +56,6 @@ public class App {
         case "/board/delete":
           boardHandler.deleteBoard();
           break;
-        case "/board2/add":
-          boardHandler2.addBoard();
-          break;
-        case "/board2/list":
-          boardHandler2.listBoard();
-          break;
-        case "/board2/detail":
-          boardHandler.detailBoard();
-          break;
-        case "/board2/update":
-          boardHandler.updateBoard();
-          break;
-        case "/board2/delete":
-          boardHandler.deleteBoard();
-          break;
-        case "/board3/add":
-          boardHandler3.addBoard();
-          break;
-        case "/board3/list":
-          boardHandler3.listBoard();
-          break;
-        case "/board3/detail":
-          boardHandler.detailBoard();
-          break;
-        case "/board3/update":
-          boardHandler.updateBoard();
-          break;
-        case "/board3/delete":
-          boardHandler.deleteBoard();
-          break;
-        case "/board4/add":
-          boardHandler4.addBoard();
-          break;
-        case "/board4/list":
-          boardHandler4.listBoard();
-          break;
-        case "/board4/detail":
-          boardHandler.detailBoard();
-          break;
-        case "/board4/update":
-          boardHandler.updateBoard();
-          break;
-        case "/board4/delete":
-          boardHandler.deleteBoard();
-          break;
         case "/schedule/add":
           scheduleHandler.addSchedule();
           break;
@@ -118,6 +74,9 @@ public class App {
         case "history":
           printCommandHistory();
           break;
+        case "history2":
+          printCommandHistory2();
+          break;
       }
 
       if (command.equalsIgnoreCase("quit")) {
@@ -128,6 +87,14 @@ public class App {
   }
   
   public static void printCommandHistory() {
-    
+    while (!stack.empty()) {
+      System.out.printf("%s\n", stack.pop());
+    }
+  }
+  
+  public static void printCommandHistory2() {
+    while (queue.size() > 0) {
+      System.out.println(queue.poll());
+    }
   }
 }
