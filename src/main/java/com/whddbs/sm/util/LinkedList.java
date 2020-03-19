@@ -2,7 +2,7 @@ package com.whddbs.sm.util;
 
 import java.util.Arrays;
 
-public class LinkedList<E> {
+public class LinkedList<E> implements List<E> {
   Node<E> first;
   Node<E> last;
 

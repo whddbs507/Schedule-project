@@ -1,9 +1,8 @@
 package com.whddbs.sm.util;
 
 import java.util.Arrays;
-import com.whddbs.sm.domain.Board;
 
-public class ArrayList<E> {
+public class ArrayList<E> implements List<E>{
   
   final static int DEFAULT_CAPACITY = 10;
   
@@ -18,8 +17,8 @@ public class ArrayList<E> {
     elementData = new Object[capacity];
   }
   
-  public void add(E object) {
-    elementData[size++] = object;
+  public void add(E e) {
+    elementData[size++] = e;
   }
   
   public E get(int detailNum) {
