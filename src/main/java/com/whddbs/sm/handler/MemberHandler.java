@@ -2,10 +2,10 @@ package com.whddbs.sm.handler;
 
 import java.util.Scanner;
 import com.whddbs.sm.domain.Member;
-import com.whddbs.sm.util.ArrayList;
 import com.whddbs.sm.util.LinkedList;
+import com.whddbs.sm.util.List;
 
-public class MemberHandler {
+public class MemberHandler<E> {
   static Scanner keyboard = new Scanner(System.in);
   int memberCount = 0;
   Scanner scanner;
@@ -16,7 +16,7 @@ public class MemberHandler {
     this.memberList = new LinkedList<>();
   }
 
-  public MemberHandler(Scanner scanner, int capacity) {
+  public MemberHandler(Scanner scanner, List<E> list) {
     this.scanner = scanner;
     this.memberList = new LinkedList<>();
   }

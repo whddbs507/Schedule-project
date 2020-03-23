@@ -34,4 +34,13 @@ public class Stack<E> implements Cloneable {
     int oldCapacity = elementData.length;
     return oldCapacity + (oldCapacity >> 1);
   }
+  
+  public Iterator iterator() throws CloneNotSupportedException {
+    return new StackIterator(this);
+  }
+  
+  @Override
+  public Stack<E> clone() throws CloneNotSupportedException {
+    return (Stack<E>) super.clone();
+  }
 }

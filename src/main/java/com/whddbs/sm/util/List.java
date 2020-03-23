@@ -5,4 +5,5 @@ public interface List<E> {
   public abstract E get(int no);
   public abstract E set(int no);
   public abstract int size();
+  public abstract Iterator iterator();
 }

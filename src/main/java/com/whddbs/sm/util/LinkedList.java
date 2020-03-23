@@ -1,7 +1,5 @@
 package com.whddbs.sm.util;
 
-import java.util.Arrays;
-
 public class LinkedList<E> implements List<E> {
   Node<E> first;
   Node<E> last;
@@ -95,5 +93,9 @@ public class LinkedList<E> implements List<E> {
 
   public int size() {
     return this.size;
+  }
+  
+  public Iterator iterator() {
+    return new ListIterator<E>(this);
   }
 }
