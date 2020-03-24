@@ -7,7 +7,7 @@ public class ArrayList<E> implements List<E>{
   final static int DEFAULT_CAPACITY = 10;
   
   Object[] elementData;
-  int size = 0;
+  int size;
   
   public ArrayList() {
     elementData = new Object[DEFAULT_CAPACITY];
@@ -21,22 +21,23 @@ public class ArrayList<E> implements List<E>{
     elementData[size++] = e;
   }
   
-  public E get(int detailNum) {
-      return (E) elementData[detailNum - 1];
+  public E get(int index) {
+      return (E) elementData[index];
   }
   
-  public E set(int updateNum) {
-    return (E) elementData[updateNum - 1];
+  public E set(int index) {
+    return (E) elementData[index];
   }
   
-  public void remove(int deleteNum) {
-    for (int i = deleteNum - 1; i < size - 1; i++) {
+  public E remove(int index) {
+    for (int i = index - 1; i < size - 1; i++) {
       elementData[i] = elementData[i + 1];
     }
     elementData[size--] = null;
+    return null;
   }
   
-  public E[] list(E[] e) {
+  public E[] toArray(E[] e) {
     return (E[]) Arrays.copyOf(elementData, size, e.getClass());
   }
   
@@ -44,4 +45,7 @@ public class ArrayList<E> implements List<E>{
     return this.size;
   }
   
+  public Iterator<E> iterator() {
+    return new ListIterator<E>(this);
+  }
 }

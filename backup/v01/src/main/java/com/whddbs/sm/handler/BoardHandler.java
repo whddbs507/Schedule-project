@@ -2,11 +2,11 @@ package com.whddbs.sm.handler;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 import com.whddbs.sm.domain.Board;
+import com.whddbs.sm.util.Iterator;
+import com.whddbs.sm.util.List;
 
 public class BoardHandler<E> {
   static Scanner keyboard = new Scanner(System.in);
@@ -51,7 +51,7 @@ public class BoardHandler<E> {
 
     boards = this.list.toArray(boards);
     iterator = list.iterator();
-    while (iterator.hasNext()) {
+    while (iterator.hasnext()) {
       Board b = iterator.next();
       System.out.printf("%d %s %s %s\n", b.getNo(),
           b.getTitle(), b.getContents(), b.getRegisteredDay());
@@ -68,6 +68,28 @@ public class BoardHandler<E> {
     System.out.printf("제목 : %s\n", board.getTitle());
     System.out.printf("내용 : %s\n", board.getContents());
     System.out.printf("등록일 : %s\n", board.getRegisteredDay());
+  }
+
+  public void updateBoard() {
+    System.out.print("변경할 번호 선택 : ");
+    int updateNum = keyboard.nextInt();
+    keyboard.nextLine();
+
+    Board board = this.list.set(updateNum);
+
+    Calendar calendar = new GregorianCalendar(Locale.KOREA);
+    int nYear = calendar.get(Calendar.YEAR);
+    int nMonth = calendar.get(Calendar.MONTH) + 1;
+    int nDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+    board.setRegisterDay(nYear + "-" + nMonth + "-" + nDay);
+    System.out.println(board.getRegisteredDay());
+
+    System.out.print("제목 : ");
+    board.setTitle(keyboard.nextLine());
+
+    System.out.print("내용 : ");
+    board.setContents(keyboard.nextLine());
   }
 
   public void deleteBoard() {

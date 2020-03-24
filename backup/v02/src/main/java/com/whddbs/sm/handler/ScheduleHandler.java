@@ -2,27 +2,23 @@ package com.whddbs.sm.handler;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 import com.whddbs.sm.domain.Schedule;
-import com.whddbs.sm.util.ArrayList;
-import com.whddbs.sm.util.LinkedList;
 
 public class ScheduleHandler {
   static Scanner keyboard = new Scanner(System.in);
-  LinkedList<Schedule> scheduleList;
-
+  List<Schedule> list;
+  Iterator<Schedule> iterator;
+  
   Scanner scanner;
   static int scheduleCount = 0;
 
-  public ScheduleHandler(Scanner scanner) {
+  public ScheduleHandler(Scanner scanner, List<Schedule> list) {
     this.scanner = scanner;
-    this.scheduleList = new LinkedList<>();
-  }
-
-  public ScheduleHandler(Scanner scanner, int capacity) {
-    this.scanner = scanner;
-    this.scheduleList = new LinkedList<>();
+    this.list = list;
   }
 
   public void addSchedule() {
@@ -43,15 +39,16 @@ public class ScheduleHandler {
     System.out.print("내용 : ");
     schedule.setContents(keyboard.nextLine());
 
-    this.scheduleList.add(schedule);
+    this.list.add(schedule);
   }
 
   public void listSchedule() {
-    Schedule[] schedules = new Schedule[this.scheduleList.size()];
+    Schedule[] schedules = new Schedule[this.list.size()];
 
-    schedules = this.scheduleList.toArray(schedules);
-
-    for (Schedule s : schedules) {
+    schedules = this.list.toArray(schedules);
+    iterator = list.iterator();
+    while (iterator.hasNext()) {
+      Schedule s = iterator.next();
       System.out.printf("%d %s %s %s\n", s.getNo(),
           s.getTitle(), s.getContents(), s.getSelectDay());
     }
@@ -62,7 +59,7 @@ public class ScheduleHandler {
     int scheduleNo = keyboard.nextInt();
     keyboard.nextLine();
 
-    Schedule schedule = this.scheduleList.get(scheduleNo);
+    Schedule schedule = this.list.get(scheduleNo);
 
     System.out.printf("번호 : %d\n", scheduleNo);
     System.out.printf("제목 : %s\n", schedule.getTitle());
@@ -70,26 +67,6 @@ public class ScheduleHandler {
     System.out.printf("등록일 : %s\n", schedule.getSelectDay());
   }
 
-  public void updateSchedule() {
-    System.out.print("변경할 번호 선택 : ");
-    int updateNum = keyboard.nextInt();
-    keyboard.nextLine();
-
-    Schedule schedule = this.scheduleList.set(updateNum);
-
-    Calendar calendar = new GregorianCalendar(Locale.KOREA);
-    int nYear = calendar.get(Calendar.YEAR);
-    int nMonth = calendar.get(Calendar.MONTH) + 1;
-    int nDay = calendar.get(Calendar.DAY_OF_MONTH);
-    schedule.setSelectDay(nYear + "-" + nMonth + "-" + nDay); 
-    System.out.println(schedule.getSelectDay());
-    System.out.print("제목 : ");
-    schedule.setTitle(keyboard.nextLine());
-
-    System.out.print("내용 : ");
-    schedule.setContents(keyboard.nextLine());
-
-  }
 
   public void deleteSchedule() {
     System.out.print("삭제할 번호 선택 : ");
@@ -102,12 +79,12 @@ public class ScheduleHandler {
       System.out.println("존재하지 않는 넘버입니다.");
     }
     
-    this.scheduleList.remove(index);
+    this.list.remove(index);
   }
 
   private int indexOfSchedule(int no) {
-    for (int i = 0; i <= this.scheduleList.size(); i++) {
-      if (this.scheduleList.get(i).getNo() == no) {
+    for (int i = 0; i <= this.list.size(); i++) {
+      if (this.list.get(i).getNo() == no) {
         return i;
       }
     }

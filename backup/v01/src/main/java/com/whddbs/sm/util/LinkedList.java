@@ -39,7 +39,7 @@ public class LinkedList<E> implements List<E> {
   public E get(int num) {
     Node cursor = first;
 
-    for (int i = 0; i < num; i++) {
+    for (int i = 0; i < num - 1; i++) {
       cursor = cursor.next;
     }
 

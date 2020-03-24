@@ -5,15 +5,15 @@ public class ListIterator<E> implements Iterator {
   List<E> list;
   int cursor;
   
-  public ListIterator(E e) {
-    
+  public ListIterator(List<E> list) {
+    this.list = list;
   }
   
   public boolean hasnext() {
     return cursor < list.size();
   }
   
-  public Object next() {
+  public E next() {
     return list.get(cursor++);
   }
 }

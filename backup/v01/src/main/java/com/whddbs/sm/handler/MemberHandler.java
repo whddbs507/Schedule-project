@@ -1,9 +1,9 @@
 package com.whddbs.sm.handler;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
 import com.whddbs.sm.domain.Member;
+import com.whddbs.sm.util.Iterator;
+import com.whddbs.sm.util.List;
 
 public class MemberHandler<E> {
   static Scanner keyboard = new Scanner(System.in);
@@ -45,9 +45,9 @@ public class MemberHandler<E> {
     
     iterator = list.iterator();
     
-    System.out.println(iterator.hasNext());
+    System.out.println(iterator.hasnext());
     
-    while (iterator.hasNext()) {
+    while (iterator.hasnext()) {
       Member m = iterator.next();
       System.out.printf("%d %s %s %s\n", m.getNo(),
           m.getName(), m.getEmail(), m.getPw());
@@ -66,6 +66,26 @@ public class MemberHandler<E> {
     System.out.printf("비밀번호 : %s\n", member.getPw());
   }
 
+  public void updateMember() {
+    System.out.print("변경할 번호 선택 : ");
+    int updateNum = keyboard.nextInt();
+    keyboard.nextLine();
+
+    Member member = this.list.set(updateNum);
+
+    System.out.print("이름 : ");
+    member.setName(keyboard.nextLine());
+
+    System.out.print("이메일 : ");
+    member.setEmail(keyboard.nextLine());
+
+    System.out.print("비밀번호 : ");
+    member.setPw(keyboard.nextLine());
+
+    System.out.print("비밀번호 확인 : ");
+    member.setPwRe(keyboard.nextLine());
+
+  }
 
   public void deleteMember() {
     System.out.print("삭제할 번호 선택 : ");

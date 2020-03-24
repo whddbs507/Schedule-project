@@ -1,7 +1,7 @@
 package com.whddbs.sm.domain;
 
 public class Schedule {
-  private static int no;
+  private int no;
   private String selectDay;
   private String title;
   private String contents;

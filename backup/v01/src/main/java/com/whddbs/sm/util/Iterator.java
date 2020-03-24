@@ -1,6 +1,6 @@
 package com.whddbs.sm.util;
 
-public interface Iterator {
+public interface Iterator<E> {
   boolean hasnext();
-  Object next();
+  E next();
 }
