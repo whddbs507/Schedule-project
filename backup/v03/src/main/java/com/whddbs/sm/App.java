@@ -1,8 +1,5 @@
 package com.whddbs.sm;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -23,25 +20,21 @@ import com.whddbs.sm.util.MemberDetailCommand;
 import com.whddbs.sm.util.MemberListCommand;
 
 public class App {
-
   static Scanner keyboard = new Scanner(System.in);
   static Deque<String> stack = new ArrayDeque();
   static Queue<String> queue = new LinkedList();
 
-  static LinkedList<Board> boardList = new LinkedList<>();
-  static LinkedList<Member> memberList = new LinkedList<>();
-
   public static void main(String[] args) {
-
-    loadBoardData();
-
+    
     HashMap<String, Command> commandMap = new HashMap<>();
 
+    LinkedList<Board> boardList = new LinkedList<>();
     commandMap.put("/board/add", new BoardAddCommand(keyboard, boardList));
     commandMap.put("/board/delete", new BoardDeleteCommand(keyboard, boardList));
     commandMap.put("/board/detail", new BoardDetailCommand(keyboard, boardList));
     commandMap.put("/board/list", new BoardListCommand(keyboard, boardList));
 
+    LinkedList<Member> memberList = new LinkedList<>();
     commandMap.put("/member/add", new MemberAddCommand(keyboard, memberList));
     commandMap.put("/member/delete", new MemberDeleteCommand(keyboard, memberList));
     commandMap.put("/member/detail", new MemberDetailCommand(keyboard, memberList));
@@ -75,9 +68,6 @@ public class App {
         System.out.println("잘못된 명령어입니당 ^^");
       }
     }
-
-    saveBoardData();
-    saveMemberData();
   }
 
   private static void printCommandHistory(Iterator<String> iterator) {
@@ -85,102 +75,5 @@ public class App {
       System.out.println(iterator.next());
     }
   }
-
-  private static void loadBoardData() {
-    File file = new File("./board.csv");
-
-    FileReader in = null;
-    Scanner dataScan = null;
-    int count = 0;
-
-    try {
-      in = new FileReader(file);
-      dataScan = new Scanner(in);
-
-      while(true) {
-        String line = dataScan.nextLine();
-        String[] data = line.split(",");
-
-        Board board = new Board();
-
-        board.setNo(Integer.parseInt(data[0]));
-        board.setTitle(data[1]);
-        board.setContents(data[2]);
-
-        boardList.add(board);
-        count++;
-      }
-    } catch(Exception e) {
-    } finally {
-      try {
-        System.out.printf("총 %d 개의 수업 데이터를 로딩했습니다\n", count);
-        in.close();
-      } catch(Exception e) {
-
-      }
-    }
-  }
   
-  private static void loadMemberData() {
-    File file = new File("./member.csv");
-    
-    FileReader in = null;
-    Scanner dataScan = null;
-    try {
-      in = new FileReader(file);
-      dataScan = new Scanner(in);
-      
-      while (true) {
-        String line = dataScan.nextLine();
-        
-      }
-    } catch (Exception e) {
-      
-    }
-  }
-  
-  private static void saveBoardData() {
-    File file = new File("./board.csv");
-
-    FileWriter out = null;
-
-    try {
-      out = new FileWriter(file);
-      int count = 0;
-
-      for (Board board : boardList) {
-        String line = String.format("%d,%s,%s\n", board.getNo()
-            , board.getTitle(), board.getContents());
-
-        out.write(line);
-        count++;
-      }
-      System.out.printf("총 %d 개의 수업 데이터를 저장했습니다.\n", count);
-      out.close();
-    } catch(Exception e) {
-      System.out.println("파일 쓰기 중 오류 발생 - " + e.getMessage());
-    }
-  }
-
-  private static void saveMemberData() {
-    File file = new File("./member.csv");
-    
-    FileWriter out = null;
-    
-    try {
-      out = new FileWriter(file);
-      int count = 0;
-
-      for (Member member : memberList) {
-        String line = String.format("%d,%s,%s,%s\n", member.getNo(), member.getName()
-            , member.getEmail(), member.getPw());
-        out.write(line);
-        count++;
-      }
-      out.close();
-    } catch (Exception e) {
-      System.out.println("파일 쓰기 중 오류 발생 - " + e.getMessage());
-    }
-    
-  }
 }
