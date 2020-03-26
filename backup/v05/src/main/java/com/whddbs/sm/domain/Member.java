@@ -1,17 +1,17 @@
 package com.whddbs.sm.domain;
 
-import java.io.Serializable;
-
-public class Member implements Serializable {
-  
-  private static final long serialVersionUID = 20200326L;
-  
+public class Member {
   private int no;
   private String name;
   private String email;
   private String pw;
   private String pwRe;
 
+  public String toCsvString() {
+    return String.format("%d,%s,%s,%s\n", getNo(), getName()
+        , getEmail(), getPw());
+  }
+  
   public void setNo(int no) {
     this.no = no;
   }

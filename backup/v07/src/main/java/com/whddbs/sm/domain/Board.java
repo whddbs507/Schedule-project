@@ -1,11 +1,6 @@
 package com.whddbs.sm.domain;
 
-import java.io.Serializable;
-
-public class Board implements Serializable {
-  
-  private static final long serialVersionUID = 20200326L;
-  
+public class Board {
   private int no;
   private String registeredDay;
   private String title;

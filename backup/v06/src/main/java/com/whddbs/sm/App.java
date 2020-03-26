@@ -1,21 +1,16 @@
 package com.whddbs.sm;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 import com.google.gson.Gson;
@@ -37,14 +32,14 @@ public class App {
   static Deque<String> stack = new ArrayDeque();
   static Queue<String> queue = new LinkedList();
 
-  static List<Board> boardList = new ArrayList<>();
-  static List<Member> memberList = new ArrayList<>();
+  static LinkedList<Board> boardList = new LinkedList<>();
+  static LinkedList<Member> memberList = new LinkedList<>();
 
   public static void main(String[] args) {
 
     loadBoardData();
     loadMemberData();
-
+    
     HashMap<String, Command> commandMap = new HashMap<>();
 
     commandMap.put("/board/add", new BoardAddCommand(keyboard, boardList));
@@ -85,7 +80,7 @@ public class App {
         System.out.println("잘못된 명령어입니당 ^^");
       }
     }
-
+    
     saveBoardData();
     saveMemberData();
   }
@@ -95,60 +90,59 @@ public class App {
       System.out.println(iterator.next());
     }
   }
-
+  
   private static void loadBoardData() {
     Gson gson = new Gson();
-    File file = new File("./board.ser2");
-
-    try (ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-      boardList = (List<Board>) in.readObject();
-
-      System.out.printf("%d개의 board 데이터를 로드했습니다.\n", boardList.size());
-
-      in.close();
-    } catch (Exception e) {
-
-    }
-  }
-
-  private static void loadMemberData() {
-    File file = new File("./member.ser2");
-
-    try (ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-      memberList = (List<Member>) in.readObject();
-      
-      System.out.printf("%d개의 member 데이터를 로드했습니다.\n", memberList.size());
-      
-      in.close();
-    } catch (Exception e) {
-      
-    }
-  }
-
-  private static void saveBoardData() {
-    File file = new File("./board.ser2");
-
-    try (ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
-      out.writeObject(boardList);
-      System.out.printf("%d개의 board 데이터를 저장합니다.\n", boardList.size());
-
-      out.close();
-    } catch (Exception e) {
-
-    }
-  }
-
-  private static void saveMemberData() {
-    File file = new File("./member.ser2");
+    File file = new File("./board.json");
     
-    try (ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
-      out.writeObject(memberList);
+    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+      boardList.addAll(Arrays.asList(gson.fromJson(in, Board[].class)));
+      System.out.printf("%d개의 board 데이터를 로드했습니다.\n", boardList.size());
+      
+      in.close();
+    } catch (Exception e) {
+      
+    }
+  }
+  
+  private static void loadMemberData() {
+    Gson gson = new Gson();
+    File file = new File("./member.json");
+    
+    try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+      memberList.addAll(Arrays.asList(gson.fromJson(in, Member[].class)));
+      in.close();
+      
+      System.out.printf("%d개의 member 데이터를 로드합니다.\n", memberList.size());
+    } catch (Exception e) {
+      
+    }
+  }
+  
+  private static void saveMemberData() {
+    Gson gson = new Gson();    
+    File file = new File("./member.json");
+    
+    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
+      out.write(gson.toJson(memberList));
+      out.close();
+      
       System.out.printf("%d개의 member 데이터를 저장합니다.\n", memberList.size());
+    } catch (Exception e) {
+      
+    }
+  }
+  
+  private static void saveBoardData() {
+    Gson gson = new Gson();
+    File file = new File("./board.json");
+    try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
+      out.write(gson.toJson(boardList));
+      System.out.printf("%d개의 board 데이터를 저장합니다.\n", boardList.size());
       
       out.close();
     } catch (Exception e) {
       
     }
   }
-
 }

@@ -1,24 +1,15 @@
 package com.whddbs.sm;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
-import com.google.gson.Gson;
 import com.whddbs.sm.domain.Board;
 import com.whddbs.sm.domain.Member;
 import com.whddbs.sm.util.BoardAddCommand;
@@ -37,14 +28,14 @@ public class App {
   static Deque<String> stack = new ArrayDeque();
   static Queue<String> queue = new LinkedList();
 
-  static List<Board> boardList = new ArrayList<>();
-  static List<Member> memberList = new ArrayList<>();
+  static LinkedList<Board> boardList = new LinkedList<>();
+  static LinkedList<Member> memberList = new LinkedList<>();
 
   public static void main(String[] args) {
 
     loadBoardData();
     loadMemberData();
-
+    
     HashMap<String, Command> commandMap = new HashMap<>();
 
     commandMap.put("/board/add", new BoardAddCommand(keyboard, boardList));
@@ -97,58 +88,102 @@ public class App {
   }
 
   private static void loadBoardData() {
-    Gson gson = new Gson();
-    File file = new File("./board.ser2");
+    File file = new File("./board.csv");
+    FileReader in = null;
+    Scanner dataScan = null;
+    int count = 0;
 
-    try (ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-      boardList = (List<Board>) in.readObject();
+    try {
+      in = new FileReader(file);
+      dataScan = new Scanner(in);
 
-      System.out.printf("%d개의 board 데이터를 로드했습니다.\n", boardList.size());
+      while (true) {
+        String str = dataScan.nextLine();
+        String[] strArray = str.split(",");
 
-      in.close();
+        Board board = new Board();
+        board.setNo(Integer.parseInt(strArray[0]));
+        board.setTitle(strArray[1]);
+        board.setContents(strArray[2]);
+        boardList.add(board);
+
+        count++;
+      }
     } catch (Exception e) {
 
     }
+    System.out.printf("%d개의 board 데이터를 로드했습니다.\n", count);
   }
 
   private static void loadMemberData() {
-    File file = new File("./member.ser2");
-
-    try (ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-      memberList = (List<Member>) in.readObject();
+    File file = new File("./member.csv");
+    FileReader in = null;
+    Scanner dataScan = null;
+    int count = 0;
+    
+    try {
+      in = new FileReader(file);
+      dataScan = new Scanner(in);
       
-      System.out.printf("%d개의 member 데이터를 로드했습니다.\n", memberList.size());
+      while (true) {
+        String str = dataScan.nextLine();
+        String[] strArray = str.split(",");
+        
+        Member member = new Member();
+        
+        member.setNo(Integer.parseInt(strArray[0]));
+        member.setName(strArray[1]);
+        member.setEmail(strArray[2]);
+        member.setPw(strArray[3]);
+        
+        memberList.add(member);
+        
+        count++;
+        in.close();
+      }
       
-      in.close();
     } catch (Exception e) {
       
     }
+    System.out.printf("%d개의 member 데이터를 로드했습니다.\n", count);
   }
-
+  
   private static void saveBoardData() {
-    File file = new File("./board.ser2");
+    File file = new File("./board.csv");
+    FileWriter out = null;
+    int count = 0;
 
-    try (ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
-      out.writeObject(boardList);
-      System.out.printf("%d개의 board 데이터를 저장합니다.\n", boardList.size());
+    try {
+      out = new FileWriter(file);
 
+      for (Board board : boardList) {
+        out.write(board.toCsvString());
+        count++;
+      }
       out.close();
+
     } catch (Exception e) {
 
     }
+    System.out.printf("%d개의 board 데이터가 저장 되었습니다.\n", count);
   }
 
   private static void saveMemberData() {
-    File file = new File("./member.ser2");
+    File file = new File("./member.csv");
+    FileWriter out = null;
+    int count = 0;
     
-    try (ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
-      out.writeObject(memberList);
-      System.out.printf("%d개의 member 데이터를 저장합니다.\n", memberList.size());
+    try {
+      out = new FileWriter(file);
       
+      for (Member member : memberList) {
+        out.write(member.toCsvString());
+        count++;
+      }
       out.close();
     } catch (Exception e) {
-      
-    }
-  }
 
+    }
+    System.out.printf("%d개의 member 데이터를 저장했습니다.", count);
+  }
 }

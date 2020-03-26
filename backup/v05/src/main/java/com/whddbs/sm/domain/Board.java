@@ -1,15 +1,15 @@
 package com.whddbs.sm.domain;
 
-import java.io.Serializable;
-
-public class Board implements Serializable {
-  
-  private static final long serialVersionUID = 20200326L;
-  
+public class Board {
   private int no;
   private String registeredDay;
   private String title;
   private String contents;
+  
+  public String toCsvString() {
+    return String.format("%d,%s,%s\n", getNo(), getTitle()
+        , getContents());
+  }
   
   public void setNo(int no) {
     this.no = no;
