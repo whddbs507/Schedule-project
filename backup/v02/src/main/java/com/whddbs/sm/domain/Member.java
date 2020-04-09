@@ -1,6 +1,11 @@
 package com.whddbs.sm.domain;
 
-public class Member {
+import java.io.Serializable;
+
+public class Member implements Serializable {
+  
+  private static final long serialVersionUID = 20200326L;
+  
   private int no;
   private String name;
   private String email;
